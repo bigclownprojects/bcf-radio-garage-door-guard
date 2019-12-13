@@ -1,6 +1,6 @@
 #include <application.h>
 
-#ifdef DEBUG
+#ifndef DEBUG
 #define UPDATE 10 * 1000
 #define TIMEOUT 10 * 60 * 1000
 #else
