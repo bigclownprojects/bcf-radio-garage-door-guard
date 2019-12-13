@@ -2,6 +2,10 @@
 
 # Firmware for Garage Door Guard
 
+You will find detailed description of this project on Hackster.io:
+
+**https://www.hackster.io/hubpav/garage-door-guard-6ef3a1**
+
 
 ## Requirements
 
