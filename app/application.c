@@ -10,6 +10,8 @@
 #define TIMEOUT 10 * 1000
 #endif
 
+#define SAMPLES 8
+
 // LED instance
 bc_led_t led;
 
@@ -24,6 +26,14 @@ bc_dice_t dice;
 
 // Sigfox Module instance
 bc_module_sigfox_t sigfox_module;
+
+bc_data_stream_t stream_x;
+bc_data_stream_t stream_y;
+bc_data_stream_t stream_z;
+
+BC_DATA_STREAM_FLOAT_BUFFER(stream_buffer_x, SAMPLES)
+BC_DATA_STREAM_FLOAT_BUFFER(stream_buffer_y, SAMPLES)
+BC_DATA_STREAM_FLOAT_BUFFER(stream_buffer_z, SAMPLES)
 
 bc_tick_t report;
 
@@ -50,8 +60,20 @@ void lis2dh12_event_handler(bc_lis2dh12_t *self, bc_lis2dh12_event_t event, void
             bc_log_info("APP: Acceleration = [%.2f,%.2f,%.2f]", result.x_axis, result.y_axis, result.z_axis);
             #endif
 
+            bc_data_stream_feed(&stream_x, &result.x_axis);
+            bc_data_stream_feed(&stream_y, &result.y_axis);
+            bc_data_stream_feed(&stream_z, &result.z_axis);
+
+            float x_axis;
+            float y_axis;
+            float z_axis;
+
+            if (!bc_data_stream_get_median(&stream_x, &x_axis)) { return; }
+            if (!bc_data_stream_get_median(&stream_y, &y_axis)) { return; }
+            if (!bc_data_stream_get_median(&stream_z, &z_axis)) { return; }
+
             // Update dice with new vectors
-            bc_dice_feed_vectors(&dice, result.x_axis, result.y_axis, result.z_axis);
+            bc_dice_feed_vectors(&dice, x_axis, y_axis, z_axis);
 
             // This variable holds last dice face
             static bc_dice_face_t last_face = BC_DICE_FACE_UNKNOWN;
@@ -73,6 +95,10 @@ void lis2dh12_event_handler(bc_lis2dh12_t *self, bc_lis2dh12_event_t event, void
                 report = (face == 1 || face == 6) ? bc_tick_get() + TIMEOUT : 0;
 
                 bc_led_pulse(&led, 200);
+
+                bc_data_stream_reset(&stream_x);
+                bc_data_stream_reset(&stream_y);
+                bc_data_stream_reset(&stream_z);
             }
         }
     }
@@ -80,6 +106,10 @@ void lis2dh12_event_handler(bc_lis2dh12_t *self, bc_lis2dh12_event_t event, void
     else if (event == BC_LIS2DH12_EVENT_ERROR)
     {
         bc_log_error("APP: Accelerometer error");
+
+        bc_data_stream_reset(&stream_x);
+        bc_data_stream_reset(&stream_y);
+        bc_data_stream_reset(&stream_z);
     }
 }
 
@@ -103,6 +133,10 @@ void sigfox_module_event_handler(bc_module_sigfox_t *self, bc_module_sigfox_even
 
 void application_init(void)
 {
+    bc_data_stream_init(&stream_x, SAMPLES, &stream_buffer_x);
+    bc_data_stream_init(&stream_y, SAMPLES, &stream_buffer_y);
+    bc_data_stream_init(&stream_z, SAMPLES, &stream_buffer_z);
+
     // Initialize logging
     bc_log_init(BC_LOG_LEVEL_DUMP, BC_LOG_TIMESTAMP_ABS);
 
