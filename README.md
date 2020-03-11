@@ -1,6 +1,11 @@
-<a href="https://www.bigclown.com/"><img src="https://bigclown.sirv.com/logo.png" width="200" alt="BigClown Logo" align="right"></a>
+<a href="https://www.hardwario.com/"><img src="https://www.hardwario.com/ci/assets/hw-logo.svg" width="200" alt="HARDWARIO Logo" align="right"></a>
 
 # Firmware for Garage Door Guard
+
+[![Travis](https://img.shields.io/travis/bigclownprojects/bcf-sigfox-garage-door-guard/master.svg)](https://travis-ci.org/bigclownprojects/bcf-sigfox-garage-door-guard)
+[![Release](https://img.shields.io/github/release/bigclownprojects/bcf-sigfox-garage-door-guard.svg)](https://github.com/bigclownprojects/bcf-sigfox-garage-door-guard/releases)
+[![License](https://img.shields.io/github/license/bigclownprojects/bcf-sigfox-garage-door-guard.svg)](https://github.com/bigclownprojects/bcf-sigfox-garage-door-guard/blob/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/follow/hardwario_en.svg?style=social&label=Follow)](https://twitter.com/hardwario_en)
 
 You will find detailed description of this project on Hackster.io:
 

@@ -1,0 +1,15 @@
+#article: https://www.bigclown.com/doc/projects/radio-co2-monitor/
+#video: https://youtu.be/jGxjl5v7kqE
+#images:
+#  - title:
+#    url: https://github.com/hardwario/website/blob/master/static/kits-images/co2-monitor/main.png
+articles:
+  - title: Sigfox Garage Door Guard
+    url: https://www.hackster.io/hubpav/sigfox-garage-door-guard-6ef3a1
+    description: Get notification when your garage door is left open by undesired activation of the remote controller in the pocket (or by your kid).
+    images:
+      - url: https://hackster.imgix.net/uploads/attachments/1036907/_acrEt45wst.blob?auto=compress%2Cformat&w=900&h=675&fit=min
+assembly:
+  - name: HARDWARIO Sigfox Module
+  - name: HARDWARIO Core Module
+  - name: HARDWARIO Battery Module
